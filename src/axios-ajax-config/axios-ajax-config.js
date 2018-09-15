@@ -19,7 +19,7 @@
     } else if (typeof exports === "object") {
         module.exports = factory();
     } else {
-        root.ajaxConfig = factory();
+        root.ajaxConfig = factory(); 
     }
 }(typeof window !== "undefined" ? window : this, function () {
     var axios = require('axios');
