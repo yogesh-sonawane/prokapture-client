@@ -6,7 +6,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+        <router-link to="/">
+            <a class="navbar-brand">
+                <font color="#ababab" style="font-style: italic;">pro</font><font color="#ffc000">Kapture</font>
+            </a>
+        </router-link>        
     </div>
 </template>
 <script>

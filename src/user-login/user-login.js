@@ -1,7 +1,7 @@
-var axios = require('axios');
-const instance = axios.create({
-    baseURL: 'http://localhost:63233/api/'
-})
+var {
+    AxiosConfig
+} = require('../axios-ajax-config/axios-ajax-config');
+var axiosConfig = new AxiosConfig();
 
 export default {
     name: 'user-login',
@@ -11,8 +11,7 @@ export default {
     data: function () {
         return {
             count: () => {
-                instance.get('values/getproducts').then(res => {  
-                    // var id = 123;
+                axiosConfig.ajaxGet('values/getproducts').then(res => {                   
                     this.$router.push({
                         path: '/user-master/' + res
                     });

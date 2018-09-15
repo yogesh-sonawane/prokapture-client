@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Moment from 'moment';
 import VueRouter from 'vue-router';
 import VeeValidate from "vee-validate";
 import app from './app.vue';
@@ -22,10 +23,10 @@ const vueRouter = [{
       id: 20,
     },
   },
-  {
-    path: '/user-master/userId',
-    component: userMaster,
-  },
+  // {
+  //   path: '/user-master/userId',
+  //   component: userMaster,
+  // },
   {
     path: '/user-login',
     component: userLogin,
@@ -52,6 +53,20 @@ const router = new VueRouter({
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
+
+Vue.filter('formatDate', function (value) {
+  if (value) {
+    return Moment(String(value)).format('MM/DD/YYYY')
+  }
+});
+
+/*
+Vue.filter('formatTime', function (value) {
+  if (value) {
+    return Moment(String(value)).format('hh:mm:ss')
+  }
+});
+*/
 
 new Vue({
   router,

@@ -39,18 +39,27 @@
                     <span v-if="submitted && errors.has('Business Process Name')" class="invalid-feedback">{{ errors.first('Business Process Name') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="businessProcessDescription">Business Process Description:</label>
-                    <input id="businessProcessDescription" placeholder="Business Process Description" type="text" v-model="businessProcess.businessProcessDescription" v-validate="'required'" name="Business Process Description" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Business Process Description') }" />
+                    <label for="bpShortDescription">Business Process Description:</label>
+                    <input id="bpShortDescription" placeholder="Business Process Description" type="text" v-model="businessProcess.bpShortDescription" v-validate="'required'" name="Business Process Description" class="form-control" :class="{ 'is-invalid': submitted && errors.has('Business Process Description') }" />
                     <div v-if="submitted && errors.has('Business Process Description')" class="invalid-feedback">{{ errors.first('Business Process Description') }}</div>
                 </div>
                 <div class="form-group">
-                     <label for="category">Category:</label>
-                     <select v-model="businessProcess.category" class="form-control">
-                    <option v-for="option in categories" :key="option.value">
-                        {{ option.text }}
-                    </option>
+                     <label for="categoryId">Category:</label>
+                     <select v-model="businessProcess.categoryId" class="form-control">
+                        <option v-for="option in categories"
+                        :key="option.categoryId" :value="option.categoryId">
+                            {{ option.categoryName }}
+                        </option>
                     </select>
-                    <span>Selected: {{ businessProcess.category }}</span>
+                </div>
+                <div class="form-group">
+                    <label for="Is Enabled">Is Enabled?</label>
+                    <br>
+                    <input type="radio" id="Yes" value="true" v-model="businessProcess.isEnabled">
+                    <label for="Yes">Yes</label>
+                    &nbsp;&nbsp;
+                    <input type="radio" id="No" value="false" v-model="businessProcess.isEnabled">
+                    <label for="No">No</label>
                 </div>
                 <div class="form-group">
                     <button :disabled="errors.any()" class="btn btn-primary">Register</button>
@@ -81,12 +90,12 @@
                     <td>
                         {{bp.bpShortDescription}}
                     </td>
-                    <td>{{bp.categoryId}}</td>
+                    <td>{{bp.categoryMaster.categoryName}}</td>
                     <td>
                         {{bp.isEnabled}}
                     </td>
                     <td>
-                        {{bp.lastUpdatedOn}}
+                        {{bp.lastUpdatedOn | formatDate}}
                     </td>
                 </tr>
             </tbody>
@@ -96,43 +105,64 @@
 </div> 
 </template>
 <script>
-const axios = require('axios');
+var {AxiosConfig} = require('../axios-ajax-config/axios-ajax-config');
+var axiosConfig = new AxiosConfig();
 export default {
   name: 'business-process-page',
   data: function() {
     return {
       businessProcess: {
         businessProcessName: '',
-        BusinessProcessDescription: '',
-        category: null,
-        isEnabled: true,
-        lastUpdatedOn: Date.now()
+        bpShortDescription: '',
+        categoryId: 1,
+        isEnabled: false,
+        lastUpdatedOn: new Date(),
       },
       submitted: false,
       businessProcs: [],
-      categories: [
-        {value: 1, text: 'Category 1'},
-        {value: 2, text: 'Category 2'},
-        {value: 3, text: 'Category 3'},
-      ],
+      categories: [],
     };
   },
   methods: {
     handleSubmit: function(e) {
       this.submitted = true;
+      var businessProcess = this.businessProcess;
       this.$validator.validate().then(valid => {
         if (valid) {
-          
+          axiosConfig
+            .ajaxPost({
+              endPoint: 'businessprocess',
+              data: businessProcess,
+            })
+            .then(r => {
+              this.getBpData();
+            })
+            .catch(e => {});
         }
       });
     },
+    getBpData: function() {
+      axiosConfig
+        .ajaxGetAsync({
+          endPoint: 'BusinessProcess/getallbusinessprocesses',
+        })
+        .then(res => {
+          this.businessProcs = res.data;
+        });
+    },
+    getCategories: function() {
+      axiosConfig
+        .ajaxGetAsync({
+          endPoint: 'BusinessProcess/get-categories',
+        })
+        .then(res => {
+          this.categories = res.data;
+        });
+    },
   },
   created() {
-    axios
-      .get('http://localhost:63233/api/BusinessProcess/getallbusinessprocesses')
-      .then(res => {
-        this.businessProcs = res.data;
-      });
+    this.getBpData();
+    this.getCategories();
   },
 };
 </script>

@@ -8,7 +8,7 @@
     <business-process-page></business-process-page>
   </div>
 </template>
-<script src="./user-master.ts"></script>
+<script src="./user-master.js"></script>
 <script>
 import headerComponent from '../components/header/header-component';
 import leftMenuComponent from '../components/left-menu/left-menu-component';

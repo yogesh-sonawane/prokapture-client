@@ -26,7 +26,8 @@
 </div>
 </template>
 <script>
-const axios = require('axios');
+var {AxiosConfig} = require('../axios-ajax-config/axios-ajax-config');
+var axiosConfig = new AxiosConfig();
 export default {
   name: 'user-master-page',
   data: function() {
@@ -35,7 +36,7 @@ export default {
     };
   },
   created() {
-    axios.get('http://localhost:63233/api/values/getallsystems').then(res => {
+    axiosConfig.ajaxGet({endPoint: 'values/getallsystems'}).then(res => {
       this.pr = res.data;
     });
   },
