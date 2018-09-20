@@ -1,44 +1,37 @@
 <template>
-    <div id="user-login">   
-      <p>{{message}}</p>   
-       <form style="margin: 15px;" accept-charset="UTF-8">
-          <div class="form-group">
-            <!-- <label for="Username">Username:</label> -->
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-user"></i>
-              </div>
-              <input  name="UserName" type="text" class="form-control" placeholder="Username" required="required">
-            </div>
-          </div>
-          <div class="col-md-12" style="height: 5px;">&nbsp;</div>
-          <div class="form-group">
-            <!-- <label for="Password">Password:</label> -->
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="fa fa-asterisk"></i>
-              </div>
-              <input  name="Password" type="password" autocomplete="current-password" class="form-control"
-                placeholder="Password" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <div id="tdError" class="xyz"> {{message}}
-            </div>
-          </div>
-          <div class="">
-            <div class="col-xs-8 text-left checkbox">
-            </div>
-            <div class="col-xs-4" style="padding:0;">
-              <div class="form-group text-right">
-                <button  class="btn btn-success text-uppercase" type="submit">Sign
-                  In</button>
-              </div>
-              <div>{{count()}}</div>
-            </div>
-          </div>
-        </form>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="login-panel panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Please Sign In</h3>
+					</div>
+					<div class="panel-body">
+						<form @submit.prevent="userLogin">
+							<fieldset>
+								<div class="form-group">
+									<input class="form-control" v-model="user.userName"  placeholder="Username" name="email" autofocus required>
+								</div>
+								<div class="form-group">
+									<input class="form-control" v-model="user.password" placeholder="Password" name="password" type="password" value="" required>
+								</div>
+								<div class="form-group">
+									<div id="tdError" class="xyz"> {{message}}
+									</div>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input name="remember" type="checkbox" value="Remember Me">Remember Me
+									</label>
+								</div>
+								<button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 <script src='./user-login.js'></script>
 <style src='./user-login.css'></style>

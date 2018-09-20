@@ -1,75 +1,27 @@
 import Vue from 'vue';
-import Moment from 'moment';
 import VueRouter from 'vue-router';
+import Moment from 'moment';
 import VeeValidate from "vee-validate";
+import VueResource from 'vue-resource';
 import app from './app.vue';
-import userMaster from './user-master/user-master';
-import helloWorld from './hello-world.vue';
-import userLogin from './user-login/user-login.vue';
-import landingPage from './landing/landing.vue';
-import businessProcess from './business-process/business-process.vue';
+import appRouters from './app-router';
 
 Vue.config.productionTip = false;
-const vueRouter = [{
-    path: '/',
-    component: helloWorld,
-  },
-  {
-    path: '/user-master',
-    component: userMaster,
-    props: {
-      msg: 'This is User Master',
-      message: 'User Master',
-      id: 20,
-    },
-  },
-  // {
-  //   path: '/user-master/userId',
-  //   component: userMaster,
-  // },
-  {
-    path: '/user-login',
-    component: userLogin,
-    props: {
-      message: 'This is test message...',
-    },
-  },
-  {
-    path: '/landing',
-    component: landingPage,
-  },
-  {
-    path: '/business-process',
-    component: businessProcess,
-  },
-];
-
-const router = new VueRouter({
-  mode: 'history',
-  base: '/',
-  fallback: false,
-  routes: vueRouter, // short for `routes: routes`
-});
 
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
+Vue.use(VueResource);
 
 Vue.filter('formatDate', function (value) {
-  if (value) {
-    return Moment(String(value)).format('MM/DD/YYYY')
-  }
+    return Moment(String(value)).format('MM/DD/YYYY');
 });
 
-/*
 Vue.filter('formatTime', function (value) {
-  if (value) {
-    return Moment(String(value)).format('hh:mm:ss')
-  }
+    return Moment(String(value)).format('hh:mm:ss');
 });
-*/
 
 new Vue({
-  router,
   el: "#app",
+  router: appRouters,
   render: h => h(app)
 });

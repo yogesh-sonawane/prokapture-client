@@ -1,6 +1,6 @@
 <template>
     <ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
+        <!-- <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
@@ -183,7 +183,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -194,11 +194,11 @@
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><router-link to="/"><i class="fa fa-sign-out fa-fw"></i> Logout</router-link>
                 </li>
             </ul>
         </li>
-    </ul>  
+    </ul>
 </template>
 <script>
 export default {
